@@ -1,0 +1,10 @@
+{
+    "internal_server_error": "Internal Server Error",
+    "invalid_credentials": "Invalid Email or Password",
+    "email_already_exist":"Email already exist",
+    "user_register":"Registration Successful. Please Login",
+    "user_is_inactive":"Inactive user, Please contact admin",
+    "user_not_found":"User not found",
+    "user_updated":"User updated successfully",
+    "logged_out_successful":"Logout Successfull"
+}

@@ -1,0 +1,110 @@
+<header class="p-2 mb-3 border-bottom">
+  <div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        <li><a href="javascript:void(0)" class="nav-link px-2 link-dark">Welcome <strong>{{userData.firstName}}</strong></a></li>
+      </ul>
+
+      <div class="dropdown text-end">
+        <a href="javascript:void(0)" (click)="logout()" class="nav-link px-3 link-dark"> <i class="fas fa-sign-out-alt" title="Logout"></i></a>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-12">
+      <h1>Users List</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <select (change)="rerender()" [(ngModel)]="status" class="form-select form-select-sm" style="width: 100px; float: left; position: absolute; left: 303px;    padding-top: 0.25rem;
+      padding-bottom: 0.25rem;
+      padding-left: 0.5rem;
+      font-size: .875rem;
+      border-radius: 0.2rem;">
+        <option [value]="'0,1'">Status</option>
+        <option [value]="'1'">Active</option>
+        <option [value]="'0'">Inactive</option>
+      </select>
+      <table id="usersTable" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" style="width: 100%;"
+        class="table table-striped table-bordered">
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- User Edit Form -->
+<div class="modal fade bs-example-modal-center" id="editUserModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title">Edit User</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form role="form" [formGroup]="userEditForm" (ngSubmit)="userEditForm.valid && updateUser()">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="mb-3">
+                <label class="form-label">First Name</label>
+                <input type="text" class="form-control" name="firstName" formControlName="firstName">
+                <div *ngIf="userEditForm.get('firstName')!.errors && isSubmitted">
+                  <span *ngIf="userEditForm.get('firstName')!.errors!['required']" class="text-danger">Required!
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="mb-3">
+                <label class="form-label">Last Name</label>
+                <input type="text" class="form-control" name="lastName" formControlName="lastName">
+                <div *ngIf="userEditForm.get('lastName')!.errors && isSubmitted">
+                  <span *ngIf="userEditForm.get('lastName')!.errors!['required']" class="text-danger">Required!
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="text" class="form-control" name="email" formControlName="email">
+                <div *ngIf="userEditForm.get('email')!.errors && isSubmitted">
+                  <span *ngIf="userEditForm.get('email')!.errors!['required']" class="text-danger">Required!
+                  </span>
+                  <span *ngIf="userEditForm.get('email')!.errors!['pattern']" class="text-danger">Please enter valid email!
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="mb-3">
+                <label class="form-label">Status</label>
+                <select class="form-control" name="status" formControlName="status">
+                  <option value="1">Active</option>
+                  <option value="0">Inactive</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="mb-3">
+                <label class="form-label">Profile Image(.jpeg/.jpg/.png)</label>
+                <input type="file" class="form-control" (change)="onFileChanged($event)" accept="image/*"/>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-control" name="password" formControlName="password"/>
+              </div>
+            </div>
+          </div>
+          <div class="mt-4">
+            <button type="submit" class="btn btn-primary w-md" (click)="isSubmitted=true">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
